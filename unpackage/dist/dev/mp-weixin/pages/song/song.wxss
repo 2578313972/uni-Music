@@ -1,0 +1,12 @@
+
+.hot{color: white;background-color: #d9dadb;padding: 3px 0px;padding-left: 15rpx;font-size: 25rpx;}
+.hot_list{padding-right: 18px;}
+.hot_list>view{display: -webkit-box;display: -webkit-flex;display: flex;padding: 10rpx;border-bottom: 1px solid #999999;}
+.hot_list>view>view:first-child{width:20%;}
+.hot_list>view>view:first-child image{width:100rpx;height: 100rpx;}
+.hot_list>view>view:last-child{width:80%;}
+.hot_list>view>view:last-child{line-height: 100rpx;font-size: 27rpx;}
+.right{position: fixed;right: 4px;top:145px;z-index: 2;font-size: 27rpx;text-align: center;}
+.right>view{margin-bottom: 2px;}
+.right .bg{color: #d44439;}
+

@@ -1,0 +1,152 @@
+<template>
+	<view class="all">
+		<!-- =================== 轮播 =================== -->
+		<view class="lun_img">
+			<view class="uni-padding-wrap">
+				<view class="page-section swiper">
+					<view class="page-section-spacing">
+						<swiper class="swiper" :indicator-dots="indicatorDots" :autoplay="autoplay" :interval="interval" :duration="duration">
+							<swiper-item v-for="item in imgs" :key="item">
+								<view class="swiper-item uni-bg-red">
+									<image :src="item.picUrl" />
+								</view>
+							</swiper-item>
+						</swiper>
+					</view>
+				</view>
+			</view>
+		</view>
+		<!-- =================== 推荐歌单 =================== -->
+		<view class="TJ">
+			<view class="TJ_first" name="one" @click="alllist(0)">推荐歌单<text>></text></view>
+			<view class="TJ_B">
+				<view class="TJ_box" @click="TJ_list(item)" v-for="item in TJ" :key="item">
+					<view class="TJ_box1">
+						<image :src="item.picUrl" />
+						<view>
+							<text></text>{{item.trackCount}}万
+						</view>
+					</view>
+					<view class="TJ_box2">
+						{{item.name}}
+					</view>
+				</view>
+			</view>
+		</view>
+		<!-- =================== 排行榜 =================== -->
+		<view class="PH">
+			<view @click="alllist(1)" name="two" class="PH_first">排行榜<text>></text></view>
+			<view class="PH_B">
+				<view class="PH_box" @click="TJ_list(item)" v-for="item in PH" :key="item">
+					<view class="PH_box1">
+						<image :src="item.coverImgUrl" />
+						<view>
+							<text></text>{{item.subscribedCount}}万
+						</view>
+					</view>
+					<view class="PH_box2">
+						{{item.name}}
+					</view>
+				</view>
+			</view>
+		</view>
+	</view>
+</template>
+
+<script>
+	export default {
+		data() {
+			return {
+				indicatorDots: true,
+				autoplay: true,
+				interval: 2000,
+				duration: 500,
+				imgs:[],
+				TJ:[],
+				PH:[]
+			}
+		},
+		created() {
+			uni.request({
+				url: 'http://musicapi.leanapp.cn/banner?type=2',
+				method: 'GET',
+				success: res => {
+					this.imgs = res.data.banners
+				}
+			});
+			uni.request({
+				url: 'http://musicapi.leanapp.cn/personalized?limit=6',
+				method: 'GET',
+				success: res => {
+					this.TJ = res.data.result
+				}
+			});
+			uni.request({
+				url: 'http://musicapi.leanapp.cn/toplist/detail',
+				method: 'GET',
+				success: res => {
+					this.PH = res.data.list.slice(6,12)
+				}
+			});
+		},
+		methods: {
+			changeIndicatorDots(e) {
+				this.indicatorDots = !this.indicatorDots
+			},
+			changeAutoplay(e) {
+				this.autoplay = !this.autoplay
+			},
+			intervalChange(e) {
+				this.interval = e.target.value
+			},
+			durationChange(e) {
+				this.duration = e.target.value
+			},
+			TJ_list(a){
+				uni.navigateTo({
+					url:`../list/list?id=${a.id}`
+				})
+			},
+			alllist(data){
+				console.log(data)
+				uni.navigateTo({
+					url:`../alllist/alllist?id=${data}`
+				})
+			}
+		},
+		
+	}
+</script>
+
+<style scoped>
+	.swiper{height:350upx;}
+	.lun_img{height: 350upx;}
+	.swiper-item image{width:100%;height: 350upx;}
+	
+	.TJ_first{font-size: 38upx;margin: 30upx 0upx 20upx 20upx;}
+	.TJ_first text{font-size: 44upx;}
+	
+	.TJ_B{display: flex;flex-wrap: wrap;justify-content: space-around;}
+	.TJ_box{width:33%;height:350upx;margin-bottom: 30upx;}
+	
+	.TJ_box1{position: relative;}
+	.TJ_box1 image{width:100%;height:250upx;border-radius: 15upx;}
+	.TJ_box1 view{position: absolute;top: 10upx;color: white;right: 5px;}
+	.TJ_box1 view text{display: inline-block;background: url(../../static/iconall.png)no-repeat 2px -23px;width:20px;height: 12px;}
+	
+	.TJ_box2{font-size: 24upx;box-sizing: border-box;padding: 0px 10upx;}
+	
+	
+	.PH_first{font-size: 38upx;margin: 30upx 0upx 20upx 20upx;}
+	.PH_first text{font-size: 44upx;}
+	
+	.PH_B{display: flex;flex-wrap: wrap;justify-content: space-around;}
+	.PH_box{width:33%;height:350upx;margin-bottom: 30upx;}
+	
+	.PH_box1{position: relative;}
+	.PH_box1 image{width:100%;height:250upx;border-radius: 15upx;}
+	.PH_box1 view{position: absolute;top: 10upx;color: white;right: 5px;}
+	.PH_box1 view text{display: inline-block;background: url(../../static/iconall.png)no-repeat 2px -23px;width:20px;height: 12px;}
+	
+	.PH_box2{font-size: 24upx;box-sizing: border-box;padding: 0px 10upx;}
+</style>

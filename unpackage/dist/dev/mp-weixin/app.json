@@ -1,0 +1,16 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/list/list",
+    "pages/palyList/palyList",
+    "pages/alllist/alllist"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "",
+    "navigationBarBackgroundColor": "#31C27C",
+    "backgroundColor": "#F8F8F8"
+  },
+  "usingComponents": {}
+}
