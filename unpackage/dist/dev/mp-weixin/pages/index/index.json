@@ -1,8 +1,0 @@
-{
-  "navigationStyle": "custom",
-  "usingComponents": {
-    "page-first": "/pages/pageFirst/pageFirst",
-    "hot": "/pages/hot/hot",
-    "song": "/pages/song/song"
-  }
-}
